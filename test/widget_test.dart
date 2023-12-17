@@ -1,4 +1,4 @@
-import 'package:chat_app/app/app_view.dart';
+import 'package:chat_app/app/view/meta_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
