@@ -1,1 +1,1 @@
-export 'view/well_com_view.dart';
+export 'view/well_come_view.dart';

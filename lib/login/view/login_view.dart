@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:chat_app/app/bloc/auth_bloc.dart';
 import 'package:chat_app/components/components.dart';
-import 'package:chat_app/home/home.dart';
+import 'package:chat_app/utils/show/app_show.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,13 +26,17 @@ class _LoginViewState extends State<LoginView> {
       ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
+          if (state is! AuthLoadingState) {
+            Navigator.pop(context);
+          }
           if (state is AuthenticatedState) {
-            Navigator.push<void>(
-              context,
-              MaterialPageRoute<void>(
-                builder: (BuildContext context) => const HomeView(),
-              ),
-            );
+            AppShow.navigateHomeUntil(context);
+          }
+          if (state is AuthErrorState) {
+            AppShow.showError(context, state.message);
+          }
+          if (state is AuthLoadingState) {
+            AppShow.showLoading(context);
           }
         },
         child: Padding(
@@ -42,12 +46,12 @@ class _LoginViewState extends State<LoginView> {
             children: [
               SvgPicture.asset('assets/thunder.svg', height: 100),
               const SizedBox(height: 20),
-              CustomTextFlied(
+              CustomTextField(
                 controller: _emailCtl,
                 labelText: 'Email',
               ),
               const SizedBox(height: 20),
-              CustomTextFlied(
+              CustomTextField(
                 controller: _passwordCtl,
                 labelText: 'Password',
               ),
@@ -57,7 +61,7 @@ class _LoginViewState extends State<LoginView> {
                 text: 'Login',
                 onPressed: () {
                   if (checkForm()) {
-                    final registerEvent = AuthRegisterEvent(
+                    final registerEvent = AuthLoginEvent(
                       email: _emailCtl.text,
                       password: _passwordCtl.text,
                     );

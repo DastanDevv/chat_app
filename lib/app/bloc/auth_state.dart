@@ -14,10 +14,10 @@ final class AuthenticatedState extends AuthState {
 final class UnauthenticatedState extends AuthState {}
 
 //когда произошла ошибка
-final class AuthError extends AuthState {
-  AuthError(this.message);
+final class AuthErrorState extends AuthState {
+  AuthErrorState(this.message);
   final String message;
 }
 
 //когда происходит загрузка
-final class AuthLoading extends AuthState {}
+final class AuthLoadingState extends AuthState {}
