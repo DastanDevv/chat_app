@@ -3,6 +3,7 @@ part of 'auth_bloc.dart';
 @immutable
 sealed class AuthEvent {}
 
+// когда пользователь хочет войти через login
 class AuthLoginEvent extends AuthEvent {
   AuthLoginEvent({
     required this.email,
@@ -12,6 +13,7 @@ class AuthLoginEvent extends AuthEvent {
   final String password;
 }
 
+// когда пользователь хочет зарегистрироваться
 class AuthRegisterEvent extends AuthEvent {
   AuthRegisterEvent({
     required this.email,
@@ -21,4 +23,5 @@ class AuthRegisterEvent extends AuthEvent {
   final String password;
 }
 
+// когда пользователь хочет выйти
 class AuthLogoutEvent extends AuthEvent {}
