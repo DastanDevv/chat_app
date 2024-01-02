@@ -35,6 +35,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _init(AuthInitialEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoadingState());
 
+    await Future.delayed(const Duration(seconds: 2));
+
     try {
       // Извлечаем сохраненные электронную почту и пароль из хранилища
       final email = storage.getString(_emailKey);

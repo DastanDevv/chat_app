@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AuthBloc(
+        // Инициализируйте AuthBloc с экземпляром FirebaseAuth и хранилищем
         auth: FirebaseAuth.instance,
         storage: storage,
       )..add(AuthInitialEvent()),
