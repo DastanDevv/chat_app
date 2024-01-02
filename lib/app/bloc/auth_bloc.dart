@@ -36,7 +36,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthLoadingState());
 
     try {
-      // Извлеките сохраненные электронную почту и пароль из хранилища
+      // Извлечаем сохраненные электронную почту и пароль из хранилища
       final email = storage.getString(_emailKey);
       final password = storage.getString(_passwordKey);
 
