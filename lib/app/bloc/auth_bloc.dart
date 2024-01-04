@@ -55,7 +55,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         log('$fUser');
 
         // Создать объект User с указанием электронной почты и пароля
-        final appUser = User(email: email, password: password);
+        final appUser = User(
+          email: email,
+          password: password,
+          uid: fUser.user?.uid ?? '',
+        );
 
         //Выдаем AuthenticatedState с информацией о пользователе
         emit(AuthenticatedState(appUser));
@@ -84,7 +88,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       log('$fUser');
 
       // Создание нового объекта `User` с указанием электронной почты и пароля.
-      final appUser = User(email: event.email, password: event.email);
+      final appUser = User(
+        email: event.email,
+        password: event.password,
+        uid: fUser.user?.uid ?? '',
+      );
 
       // Хранение электронной почты и пароля в локальном хранилище.
       await storage.setString(_emailKey, event.email);
@@ -121,11 +129,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       log('$fUser');
 
       // Создание новый объект пользователя приложения
-      final appUser = User(email: event.email, password: event.email);
+      final appUser = User(
+        email: event.email,
+        password: event.password,
+        uid: fUser.user?.uid ?? '',
+      );
 
       // Добавление нового пользователя в коллекцию `users` в Firebase
 
-      await db.collection("users").add(appUser.toJson());
+      await db.collection("users").doc(appUser.uid).set(appUser.toJson());
 
       // Сохраните электронную почту и пароль пользователя в локальном хранилище
       await storage.setString(_emailKey, event.email);
