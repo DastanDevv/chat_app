@@ -1,4 +1,5 @@
 import 'package:chat_app/app/bloc/auth_bloc.dart';
+import 'package:chat_app/home/cubit/home_cubit.dart';
 import 'package:chat_app/wellcome/wellcome.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,13 +14,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AuthBloc(
-        // Инициализируйте AuthBloc с экземпляром FirebaseAuth и хранилищем
-        auth: FirebaseAuth.instance,
-        storage: storage,
-        db: FirebaseFirestore.instance,
-      )..add(AuthInitialEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc(
+            auth: FirebaseAuth.instance,
+            storage: storage,
+            db: FirebaseFirestore.instance,
+          )..add(AuthInitialEvent()),
+        ),
+        BlocProvider(
+          create: (context) => HomeCubit(
+            FirebaseFirestore.instance,
+          ),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
