@@ -1,4 +1,5 @@
 import 'package:chat_app/app/bloc/auth_bloc.dart';
+import 'package:chat_app/chat/chat.dart';
 import 'package:chat_app/components/components.dart';
 import 'package:chat_app/home/cubit/home_cubit.dart';
 import 'package:chat_app/models/user_model.dart';
@@ -92,12 +93,12 @@ class HomeSuccessWidget extends StatelessWidget {
             title: Text(users[index].email),
             subtitle: Text(users[index].uid),
             onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ChatPage(users[index]),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatPage(users[index]),
+                ),
+              );
             },
           ),
         );
