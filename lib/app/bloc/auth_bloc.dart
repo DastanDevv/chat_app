@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_app/models/user_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore: library_prefixes
 import 'package:firebase_auth/firebase_auth.dart' as authPkg;
 import 'package:meta/meta.dart';
@@ -15,6 +16,7 @@ const _passwordKey = 'password-key';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
+    required this.db,
     required this.auth,
     required this.storage,
   }) : super(UnauthenticatedState()) {
@@ -27,6 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final authPkg.FirebaseAuth auth;
   final SharedPreferences storage;
+  final FirebaseFirestore db;
 
   /// Этот метод отвечает за загрузку сохраненных электронной почты и пароля пользователя из хранилища,
   /// и попытку входа в систему с полученными учетными данными. Если авторизация прошла успешно,
@@ -119,6 +122,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       // Создание новый объект пользователя приложения
       final appUser = User(email: event.email, password: event.email);
+
+      // Добавление нового пользователя в коллекцию `users` в Firebase
+
+      await db.collection("users").add(appUser.toJson());
 
       // Сохраните электронную почту и пароль пользователя в локальном хранилище
       await storage.setString(_emailKey, event.email);

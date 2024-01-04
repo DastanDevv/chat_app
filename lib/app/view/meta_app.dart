@@ -1,5 +1,6 @@
 import 'package:chat_app/app/bloc/auth_bloc.dart';
 import 'package:chat_app/wellcome/wellcome.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
         // Инициализируйте AuthBloc с экземпляром FirebaseAuth и хранилищем
         auth: FirebaseAuth.instance,
         storage: storage,
+        db: FirebaseFirestore.instance,
       )..add(AuthInitialEvent()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
