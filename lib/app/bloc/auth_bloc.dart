@@ -52,7 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: password,
         );
 
-        log('$fUser');
+        // log('$fUser');
 
         // Создать объект User с указанием электронной почты и пароля
         final appUser = User(

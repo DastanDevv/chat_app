@@ -93,12 +93,18 @@ class HomeSuccessWidget extends StatelessWidget {
             title: Text(users[index].email),
             subtitle: Text(users[index].uid),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChatPage(users[index]),
-                ),
-              );
+              final authBloc = context.read<AuthBloc>();
+              if (authBloc.state is AuthenticatedState) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatPage(
+                      secondUser: users[index],
+                      currentUser: (authBloc.state as AuthenticatedState).user,
+                    ),
+                  ),
+                );
+              }
             },
           ),
         );
