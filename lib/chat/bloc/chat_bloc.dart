@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_app/models/user_model.dart';
@@ -10,28 +11,40 @@ part 'chat_state.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc({
-    required this.db,
     required this.currentUser,
     required this.secondUser,
+    required this.db,
   }) : super(ChatInitial()) {
     on<ChatEvent>((event, emit) {});
-    // on<GetChatEvent>(_getChat);
+    on<SendMessageEvent>(sendMessage);
   }
 
   final User currentUser;
   final User secondUser;
   final FirebaseFirestore db;
-  // late final Stream<DocumentSnapshot<Map<String, dynamic>>> chatSubscription;
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> get chatStream {
-    return db.collection('chats').doc(getChatId).snapshots();
+  Future<void> sendMessage(
+      SendMessageEvent event, Emitter<ChatState> emit) async {
+    try {
+      await db.collection(getChatId).add({
+        'sender': currentUser.email,
+        'text': event.message,
+        'time': DateTime.now(),
+        'senderUid': currentUser.uid,
+      });
+      log('message ${event.message}');
+    } catch (e) {
+      log('$e');
+      emit(ChatError(e.toString()));
+    }
   }
 
-  // void _getChat(GetChatEvent event, Emitter<ChatState> emit) {
-  //   emit(ChatLoading());
-
-  //   chatSubscription = db.collection('chats').doc(getChatId).snapshots();
-  // }
+  Stream<QuerySnapshot<Map<String, dynamic>>> get chatStream {
+    return db
+        .collection(getChatId)
+        .orderBy('time', descending: false)
+        .snapshots();
+  }
 
   String get getChatId {
     final idList = <String>[currentUser.uid, secondUser.uid];

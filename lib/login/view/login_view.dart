@@ -41,9 +41,9 @@ class _LoginViewState extends State<LoginView> {
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
             children: [
+              const SizedBox(height: 40),
               SvgPicture.asset('assets/thunder.svg', height: 100),
               const SizedBox(height: 20),
               CustomTextField(
@@ -72,6 +72,7 @@ class _LoginViewState extends State<LoginView> {
                   }
                 },
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),
