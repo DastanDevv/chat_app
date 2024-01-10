@@ -1,15 +1,23 @@
 part of 'chat_bloc.dart';
 
 @immutable
+//sealed это абстарак класс
 sealed class ChatState {}
 
-final class ChatInitial extends ChatState {}
+/// Представляет собой начальное состояние чата.
+class ChatInitial extends ChatState {}
 
-final class ChatLoading extends ChatState {}
+/// Представляет состояние загрузки чата.
+class ChatLoading extends ChatState {}
 
-final class ChatSuccess extends ChatState {}
+/// Представляет собой успешное состояние чата.
+class ChatSuccess extends ChatState {}
 
-final class ChatError extends ChatState {
+/// Представляет состояние ошибки в чате.
+class ChatError extends ChatState {
+  /// Сообщение об ошибке, связанное с состоянием.
   ChatError(this.message);
+
+  /// Сообщение об ошибке.
   final String message;
 }

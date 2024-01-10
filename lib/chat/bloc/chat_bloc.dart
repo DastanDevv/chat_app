@@ -23,6 +23,10 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final User secondUser;
   final FirebaseFirestore db;
 
+  /// Отправляет сообщение в чат.
+  ///
+  /// [event] - Событие SendMessageEvent, содержащее сообщение, которое должно быть отправлено.
+  /// [emit] - Эмиттер для эмуляции состояния ChatState.
   Future<void> sendMessage(
       SendMessageEvent event, Emitter<ChatState> emit) async {
     try {
@@ -39,6 +43,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     }
   }
 
+  /// Получает поток чата.
+  ///
+  /// Возвращает поток QuerySnapshot, содержащий сообщения чата.
   Stream<QuerySnapshot<Map<String, dynamic>>> get chatStream {
     return db
         .collection(getChatId)
@@ -46,6 +53,8 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         .snapshots();
   }
 
+  /// Генерирует уникальный идентификатор чата на основе идентификаторов пользователей.
+  /// Возвращает идентификатор чата в виде строки.
   String get getChatId {
     final idList = <String>[currentUser.uid, secondUser.uid];
     idList.sort();

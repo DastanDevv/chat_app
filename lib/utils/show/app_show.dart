@@ -3,12 +3,14 @@ import 'package:chat_app/wellcome/view/well_come_view.dart';
 import 'package:flutter/material.dart';
 
 class AppShow {
+  /// Displays a snackbar with the given [message] in the [context].
   static void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );
   }
 
+  /// Отображает диалог индикатора загрузки в [context].
   static void showLoading(BuildContext context) {
     showDialog(
       context: context,
@@ -24,6 +26,7 @@ class AppShow {
     );
   }
 
+  /// Переход к главному виду и удаление всех других маршрутов из стека в [context].
   static void navigateHomeUntil(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const HomeView()),
@@ -31,6 +34,7 @@ class AppShow {
     );
   }
 
+  /// Переходит к представлению приветствия и удаляет все остальные маршруты из стека в [context].
   static void navigateWellComeUntil(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => const WellComeView()),
@@ -38,6 +42,7 @@ class AppShow {
     );
   }
 
+  /// Показывает диалог ошибки с заданным[message] в [context].
   static void showError(BuildContext context, String message) {
     showDialog(
       context: context,
