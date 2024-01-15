@@ -56,6 +56,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   /// Генерирует уникальный идентификатор чата на основе идентификаторов пользователей.
   /// Возвращает идентификатор чата в виде строки.
   String get getChatId {
+    // if (secondUser.isGroup) {
+    //   return secondUser.uid;
+    // }
     final idList = <String>[currentUser.uid, secondUser.uid];
     idList.sort();
     return idList.join('-');
