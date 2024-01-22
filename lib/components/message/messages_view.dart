@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:chat_app/chat/bloc/chat_bloc.dart';
-import 'package:chat_app/components/components.dart';
+import 'package:chat_app/components/message/message_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,9 +27,7 @@ class MessagesView extends StatelessWidget {
               return const Center(child: Text('No Messages'));
             } else {
               return Expanded(
-                child: ListView(
-                  children: messages.map((e) => MessageWidget(e)).toList(),
-                ),
+                child: MessageSuccessWidgetState(messages),
               );
             }
           }
@@ -42,5 +40,19 @@ class MessagesView extends StatelessWidget {
   List<Message>? convertToMessages(
       List<QueryDocumentSnapshot<Map<String, dynamic>>> data) {
     return data.map((e) => Message.fromJson(e.data())).toList();
+  }
+}
+
+class MessageSuccessWidgetState extends StatelessWidget {
+  const MessageSuccessWidgetState(this.messages, {super.key});
+
+  final List<Message> messages;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      reverse: true,
+      children: messages.reversed.map((e) => MessageWidget(e)).toList(),
+    );
   }
 }
