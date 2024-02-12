@@ -15,7 +15,7 @@ class CustomWavyAnimetedText extends StatelessWidget {
     return DefaultTextStyle(
       style: Theme.of(context).textTheme.displayLarge!,
       child: AnimatedTextKit(
-        totalRepeatCount: 100,
+        totalRepeatCount: 105,
         animatedTexts: [
           WavyAnimatedText(
             text,
